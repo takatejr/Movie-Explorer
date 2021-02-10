@@ -1,6 +1,7 @@
 # Movie Explorer
 
-    [Live Movie Explorer](https://takatejr.github.io/Movie-Explorer/ "Movie Explorer")
+
+    [Live Movie Explorer](https://takatejr.github.io/Movie-Explorer "Movie Explorer")
 # Case:
 
     - Search feature
