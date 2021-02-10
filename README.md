@@ -1,6 +1,6 @@
 # Movie Explorer
 
-    [Live Simple Movie Explorer](https://takatejr.github.io/Movie-Explorer "Check it")
+  [Live Simple Movie Explorer](https://takatejr.github.io/Movie-Explorer "Check it")
 # Case:
 
     - Search feature
