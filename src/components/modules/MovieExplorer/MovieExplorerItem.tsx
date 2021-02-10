@@ -8,7 +8,6 @@ type MovieExplorerItemProps = {
 };
 
 const StyledMovie = styled.div`
-  max-width: 30vw;
   background-color: rgba(200, 200, 100, 0.5);
   border: 1px solid #a1b1c1;
   margin: 3% 1%;

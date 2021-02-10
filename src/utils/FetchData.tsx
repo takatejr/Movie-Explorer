@@ -4,8 +4,6 @@ export const fetchMovies = (title: string, currentPage: number) => {
   return fetch(`${API_URL}?apikey=${API_KEY}&s=${title}&page=${currentPage}`, {
     method: "GET",
     mode: "cors",
-    cache: "force-cache",
-    credentials: "omit",
   })
     .then((res) => {
       if (!res) return;
