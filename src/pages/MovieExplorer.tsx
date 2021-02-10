@@ -92,7 +92,7 @@ export const MovieExplorer = () => {
     },
   ]);
 
-  const getData = useCallback(
+  const getMovies = useCallback(
     async () => {
      return await fetchMovies(title, currentPage)
            .then((Movies: Movie[]) => {
@@ -103,13 +103,13 @@ export const MovieExplorer = () => {
   const paginate = useCallback<MouseEventHandler<HTMLButtonElement | HTMLFormElement>>((event) => {
     const page = Number.parseInt(event.currentTarget.value, 10);
     setPage(() => page);
-    getData();
-  }, [getData]);
+    getMovies();
+  }, [getMovies]);
 
   const handleSearchMovie = useCallback<FormEventHandler<HTMLButtonElement | HTMLFormElement>>((event) => {
       event.preventDefault();
-      getData();
-    }, [getData]);
+      getMovies();
+    }, [getMovies]);
 
   const handleChangeTitle = useCallback<FormEventHandler<HTMLInputElement>>(
     (event) => {
