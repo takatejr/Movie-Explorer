@@ -23,3 +23,5 @@
     - Without info when data is loading (pagi),
     - Without page number and title in url(for caching purpose),
     - Hardcoded 100 pages of pagination, API without info about page counter.
+    - API key should send VIA header, cookies, but as some token, which could
+      be encoded on backend, then response.
