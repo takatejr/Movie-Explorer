@@ -1,14 +1,9 @@
-import React, {
-  FormEventHandler,
-  MouseEventHandler,
-  useCallback,
-  useState,
-} from "react";
-import { MovieExplorerPagination } from "../components/modules/MovieExplorer/MovieExplorerPagination";
+import React, { FormEventHandler, useCallback, useState } from "react";
 import { MovieExplorerButton } from "../components/modules/MovieExplorer/MovieExplorerButton";
 import { MovieExplorerInput } from "../components/modules/MovieExplorer/MovieExplorerInput";
-import { MovieExplorerItem } from "../components/modules/MovieExplorer/MovieExplorerItem";
-import { fetchMovies } from '../utils/FetchData';
+import { MovieExplorerList } from "../components/modules/MovieExplorer/MovieExplorerList";
+import { fetchMovies } from "../utils/FetchData";
+import useToggle from "../hooks/useToggle";
 import styled from "styled-components";
 
 export type Movie = {
@@ -17,26 +12,6 @@ export type Movie = {
   readonly Type: string;
   readonly Year: string;
   readonly imdbID: string;
-  readonly Actors?: string;
-  readonly Awards?: string;
-  readonly BoxOffice?: string;
-  readonly Country?: string;
-  readonly DVD?: string;
-  readonly Director?: string;
-  readonly Genre?: string;
-  readonly Language?: string;
-  readonly Metascore?: string;
-  readonly Plot?: string;
-  readonly Production?: string;
-  readonly Rated?: string;
-  readonly Ratings?: [];
-  readonly Released?: string;
-  readonly Response?: string;
-  readonly Runtime?: string;
-  readonly Website?: string;
-  readonly Writer?: string;
-  readonly imdbRating?: string;
-  readonly imdbVotes?: string;
 };
 
 const StyledForm = styled.form`
@@ -54,34 +29,10 @@ const StyledSection = styled.section`
   justify-content: space-around;
 `;
 
-const StyledMovies = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
-const StyledPagination = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
 export const MovieExplorer = () => {
-  const [title, setTitle] = useState<string>("");
-  const [currentPage, setPage] = useState<number>(1);
-  const [pages] = useState(() => {
-    const pageNumbers = [];
-
-    for (let i = 1; i <= 100; i++) {
-      pageNumbers.push({ page: i });
-    }
-    
-    return pageNumbers;
-  });
-
+  const { isLoading, toggle } = useToggle(false);
+  const [currentTitle, setCurrentTitle] = useState<string>("");
+  const [paginationTitle, setPaginationTitle] = useState("");
   const [Movies, setCollectionMovies] = useState<Movie[]>(() => [
     {
       Poster: "",
@@ -93,35 +44,43 @@ export const MovieExplorer = () => {
   ]);
 
   const getMovies = useCallback(
-    async () => {
-     return await fetchMovies(title, currentPage)
-           .then((Movies: Movie[]) => {
-             if (Movies === undefined) return;
-             setCollectionMovies(Movies)
-           })}, [currentPage, title]);
-
-  const paginate = useCallback<MouseEventHandler<HTMLButtonElement | HTMLFormElement>>((event) => {
-    const page = Number.parseInt(event.currentTarget.value, 10);
-    setPage(() => page);
-    getMovies();
-  }, [getMovies]);
+    async (title, page) => {
+      return await fetchMovies(title, page).then((Movies: Movie[]) => {
+        if (Movies === undefined) return;
+        setCollectionMovies(Movies);
+      });
+    },
+    [],
+  );
 
   const handleSearchMovie = useCallback<FormEventHandler<HTMLButtonElement | HTMLFormElement>>((event) => {
       event.preventDefault();
-      getMovies();
-    }, [getMovies]);
+      const page = Number.parseInt(event.currentTarget.innerHTML, 10);
 
-  const handleChangeTitle = useCallback<FormEventHandler<HTMLInputElement>>(
-    (event) => {
-      const currentTitle = event.currentTarget.value;
-      setTitle(() => currentTitle);
-    }, []);
+      if (isNaN(page)) {
+        setPaginationTitle(currentTitle);
+      }
+
+      const whichPage = isNaN(page) ? 1 : page;
+      const whichTitle = isNaN(page) ? currentTitle : paginationTitle;
+
+      getMovies(whichTitle, whichPage);
+    },
+    [currentTitle, getMovies, paginationTitle],
+  );
+
+  const handleChangeTitle = useCallback<FormEventHandler<HTMLInputElement>>((event) => {
+      const title = event.currentTarget.value;
+      setCurrentTitle(() => title);
+    },
+    [],
+  );
 
   return (
     <StyledSection aria-label="MovieExplorer">
       <StyledForm onSubmit={handleSearchMovie}>
         <MovieExplorerInput
-          title={title}
+          title={currentTitle}
           handleChange={handleChangeTitle}
           text="Put movie title..."
         />
@@ -131,27 +90,12 @@ export const MovieExplorer = () => {
           ariaLabel="Search"
         />
       </StyledForm>
-      <StyledMovies>
-        {Movies.length !== 1 &&
-          Movies.map(({ Title, Poster, Year, imdbID }) => (
-            <MovieExplorerItem
-              title={Title}
-              img={Poster}
-              year={Year}
-              key={imdbID + Title}
-            />
-          ))}
-      </StyledMovies>
-      <StyledPagination>
-        {Movies.length !== 1 &&
-          pages.map(({ page }) => (
-            <MovieExplorerPagination
-              page={page}
-              paginate={paginate}
-              key={page + "mep"}
-            />
-          ))}
-      </StyledPagination>
+      <MovieExplorerList
+        movies={Movies}
+        paginate={handleSearchMovie}
+        isLoading={isLoading}
+        toggle={toggle}
+      />
     </StyledSection>
   );
 };

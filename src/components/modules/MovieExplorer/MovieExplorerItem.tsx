@@ -30,9 +30,9 @@ const StyledYear = styled.p`
 `;
 
 export const MovieExplorerItem = memo<MovieExplorerItemProps>(
-  ({ title, img, year }) => {
+  ({ title, img, year}) => {
     return (
-      <StyledMovie key={title}>
+      <StyledMovie>
         <img src={img} alt={title} />
         <StyledInfo>
           <StyledTitle>{title}</StyledTitle>

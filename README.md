@@ -20,6 +20,6 @@
     - styles in components for now, depends on style coding,
     could be modules or styles as props,
     - Without test yet,
-    - Without info when data is loading (pagi),
+  x - Without info when data is loading (pagi),
     - Without page number and title in url(for caching purpose),
     - Hardcoded 100 pages of pagination, API without info about page counter.
