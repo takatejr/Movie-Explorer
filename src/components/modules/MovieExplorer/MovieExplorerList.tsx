@@ -37,7 +37,7 @@ export const MovieExplorerList = memo<MovieExplorerListProps>(
             ))}
           </StyledMovies>
         )}
-          <MovieExplorerPagination paginate={paginate} toggle={toggle}/>
+        <MovieExplorerPagination paginate={paginate} toggle={toggle} />
       </div>
     );
   },
