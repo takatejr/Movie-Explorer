@@ -2,7 +2,7 @@ import React, { memo, MouseEventHandler } from "react";
 import styled from "styled-components";
 import { Movie } from "../../../pages/MovieExplorer";
 import { MovieExplorerItem } from "./MovieExplorerItem";
-import usePagination from "../../../hooks/usePagination";
+import { MovieExplorerPagination } from "./MovieExplorerPagination";
 
 type MovieExplorerListProps = {
   readonly movies: Movie[];
@@ -19,17 +19,8 @@ const StyledMovies = styled.div`
   justify-content: center;
 `;
 
-const StyledPagination = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
 export const MovieExplorerList = memo<MovieExplorerListProps>(
   ({ movies, paginate, isLoading, toggle }) => {
-    const { currentPage, prevPage, nextPage } = usePagination(2, 15);
-
     return (
       <div>
         {isLoading && movies.length === 0 ? (
@@ -46,32 +37,7 @@ export const MovieExplorerList = memo<MovieExplorerListProps>(
             ))}
           </StyledMovies>
         )}
-        <StyledPagination>
-          <button
-            onClick={(e) => {
-              paginate(e);
-              toggle();
-            }}
-          >
-            {prevPage}
-          </button>
-          <button
-            onClick={(e) => {
-              paginate(e);
-              toggle();
-            }}
-          >
-            {currentPage}
-          </button>
-          <button
-            onClick={(e) => {
-              paginate(e);
-              toggle();
-            }}
-          >
-            {nextPage}
-          </button>
-        </StyledPagination>
+          <MovieExplorerPagination paginate={paginate} toggle={toggle}/>
       </div>
     );
   },

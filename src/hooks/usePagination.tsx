@@ -1,15 +1,8 @@
-import { MouseEventHandler, useState } from "react";
-
-type UsePaginationProps = {
-  readonly currentPageNumber: number;
-  readonly paginationPagesNumber: number;
-  readonly paginate: MouseEventHandler<HTMLButtonElement>;
-};
+import { useState } from "react";
 
 export const usePagination = (
   currentPageNumber: number,
   paginationPagesNumber: number,
-  // paginate: MouseEventHandler<HTMLButtonElement>,
 ) => {
   const [currentPage, setCurrentPage] = useState(() => currentPageNumber);
   const [paginationPages] = useState(() => {
@@ -22,13 +15,19 @@ export const usePagination = (
     return pageNumbers;
   });
 
-  const prevPage = currentPage - 1;
-  const nextPage = currentPage + 1;
-  const lastPage = paginationPages.length + 1;
-  const firstPage = currentPage === 1 ? null : 1;
+  const firstPage = 1;
+  const lastPage = paginationPages.length;
+  const prevPage = currentPage === 1 ? 1 : currentPage - 1;
+  const nextPage = currentPage === lastPage ? lastPage : currentPage + 1;
 
-  console.log({ currentPage, prevPage, nextPage })
-  return { currentPage, prevPage, nextPage, firstPage, lastPage };
+  return {
+    currentPage,
+    prevPage,
+    nextPage,
+    firstPage,
+    lastPage,
+    setCurrentPage,
+  };
 };
 
 export default usePagination;
