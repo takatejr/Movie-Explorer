@@ -56,13 +56,14 @@ export const MovieExplorer = () => {
   const handleSearchMovie = useCallback<FormEventHandler<HTMLButtonElement | HTMLFormElement>>((event) => {
       event.preventDefault();
       const page = Number.parseInt(event.currentTarget.innerHTML, 10);
+      const isPage = isNaN(page)
 
-      if (isNaN(page)) {
+      if (isPage) {
         setPaginationTitle(currentTitle);
       }
 
-      const whichPage = isNaN(page) ? 1 : page;
-      const whichTitle = isNaN(page) ? currentTitle : paginationTitle;
+      const whichPage = isPage ? 1 : page;
+      const whichTitle = isPage ? currentTitle : paginationTitle;
 
       getMovies(whichTitle, whichPage);
     },
