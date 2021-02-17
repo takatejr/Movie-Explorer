@@ -1,45 +1,15 @@
-import { memo, MouseEventHandler } from "react";
-import styled from "styled-components";
-import usePagination from "../../../hooks/usePagination";
+import React, { memo, MouseEventHandler } from "react";
+import usePagination from "../../../../hooks/usePagination";
+import {
+  CurrentButton,
+  StyledButton,
+  StyledPagination,
+} from "./MovieExplorerPagination.styles";
 
 type MovieExplorerPaginationProps = {
   readonly paginate: MouseEventHandler<HTMLButtonElement>;
   readonly toggle: () => void;
 };
-
-const StyledPagination = styled.div`
-  width: 70vw;
-  margin: 3% auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
-
-const StyledButton = styled.button`
-  margin: 0;
-  width: 15%;
-  color: rgba(40, 40, 40, 0.7);
-  margin: 0.1%;
-  border: 2px solid rgba(100, 200, 50, 0.7);
-  border-radius: 3px;
-
-  &:active {
-    background-color: rgba(100, 200, 50, 0.5);
-  }
-`;
-
-const CurrentButton = styled.button`
-  margin: 0.1%;
-  width: 15%;
-  background-color: rgba(30, 200, 50, 1);
-  border: 2px solid rgba(100, 200, 50, 0.7);
-  border-radius: 3px;
-
-  &:active {
-    background-color: rgba(100, 200, 50, 0.5);
-  }
-`;
 
 export const MovieExplorerPagination = memo<MovieExplorerPaginationProps>(
   ({ paginate, toggle }) => {

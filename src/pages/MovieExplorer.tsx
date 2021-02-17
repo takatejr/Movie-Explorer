@@ -1,18 +1,11 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
-import { MovieExplorerButton } from "../components/modules/MovieExplorer/MovieExplorerButton";
-import { MovieExplorerInput } from "../components/modules/MovieExplorer/MovieExplorerInput";
-import { MovieExplorerList } from "../components/modules/MovieExplorer/MovieExplorerList";
+import { MovieExplorerButton } from "../components/shared/button/Button";
+import { MovieExplorerInput } from "../components/shared/input/MovieExplorerInput";
+import { MovieExplorerList } from "../components/modules/MovieExplorer/list/MovieExplorerList";
 import { fetchMovies } from "../utils/FetchData";
 import useToggle from "../hooks/useToggle";
 import styled from "styled-components";
-
-export type Movie = {
-  readonly Poster: string;
-  readonly Title: string;
-  readonly Type: string;
-  readonly Year: string;
-  readonly imdbID: string;
-};
+import { Movie } from "../types/Movie.type";
 
 const StyledForm = styled.form`
   height: 30vh;
@@ -51,7 +44,7 @@ export const MovieExplorer = () => {
         setCollectionMovies(Movies);
       });
     },
-    [],
+    [isLoading, toggle],
   );
 
   const handleSearchMovie = useCallback<FormEventHandler<HTMLButtonElement | HTMLFormElement>>((event) => {

@@ -1,8 +1,8 @@
 import React, { memo, MouseEventHandler } from "react";
-import styled from "styled-components";
-import { Movie } from "../../../pages/MovieExplorer";
-import { MovieExplorerItem } from "./MovieExplorerItem";
-import { MovieExplorerPagination } from "./MovieExplorerPagination";
+import { Movie } from "../../../../types/Movie.type";
+import { MovieExplorerItem } from "../listitem/MovieExplorerListItem";
+import { MovieExplorerPagination } from "../pagination/MovieExplorerPagination";
+import { StyledMovies } from "./MovieExplorerList.styles";
 
 type MovieExplorerListProps = {
   readonly movies: Movie[];
@@ -10,14 +10,6 @@ type MovieExplorerListProps = {
   readonly isLoading: boolean;
   readonly toggle: () => void;
 };
-
-const StyledMovies = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
 
 export const MovieExplorerList = memo<MovieExplorerListProps>(
   ({ movies, paginate, isLoading, toggle }) => {
