@@ -23,9 +23,7 @@ export const MovieExplorerList = memo<MovieExplorerListProps>(
   ({ movies, paginate, isLoading, toggle }) => {
     return (
       <div>
-        {isLoading && movies.length === 0 ? (
-          <p>Data is fetching</p>
-        ) : movies.length === 1 ? null : (
+        {movies.length === 1 && isLoading ? null : (
           <StyledMovies>
             {movies.map(({ Title, Poster, Year, imdbID }) => (
               <MovieExplorerItem
@@ -37,7 +35,9 @@ export const MovieExplorerList = memo<MovieExplorerListProps>(
             ))}
           </StyledMovies>
         )}
-        <MovieExplorerPagination paginate={paginate} toggle={toggle} />
+        {movies.length === 1 && isLoading ? null : (
+          <MovieExplorerPagination paginate={paginate} toggle={toggle} />
+        )}
       </div>
     );
   },

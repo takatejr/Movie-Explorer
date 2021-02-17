@@ -1,7 +1,7 @@
 import { API_KEY, API_URL } from "./const";
 
 export const fetchMovies = (title: string, currentPage: number) => {
-  console.log('seg')
+
   return fetch(`${API_URL}?apikey=${API_KEY}&s=${title}&page=${currentPage}`, {
     method: "GET",
     mode: "cors",

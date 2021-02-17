@@ -8,11 +8,12 @@ type MovieExplorerPaginationProps = {
 };
 
 const StyledPagination = styled.div`
-  margin: 3%;
+  width: 70vw;
+  margin: 3% auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 const StyledButton = styled.button`
@@ -20,18 +21,6 @@ const StyledButton = styled.button`
   width: 15%;
   color: rgba(40, 40, 40, 0.7);
   margin: 0.1%;
-  border: 2px solid rgba(100, 200, 50, 0.7);
-  border-radius: 3px;
-
-  &:active {
-    background-color: rgba(100, 200, 50, 0.5);
-  }
-`;
-
-const ButtonBorderValue = styled.button`
-  margin: 0 5%;
-  width: 15%;
-  color: rgba(40, 40, 40, 0.7);
   border: 2px solid rgba(100, 200, 50, 0.7);
   border-radius: 3px;
 
@@ -66,7 +55,7 @@ export const MovieExplorerPagination = memo<MovieExplorerPaginationProps>(
     return (
       <StyledPagination>
         {firstPage === prevPage ? null : (
-          <ButtonBorderValue
+          <StyledButton
             value={firstPage}
             onClick={(e) => {
               setCurrentPage(Number(e.currentTarget.value));
@@ -75,7 +64,7 @@ export const MovieExplorerPagination = memo<MovieExplorerPaginationProps>(
             }}
           >
             {firstPage}
-          </ButtonBorderValue>
+          </StyledButton>
         )}
         {prevPage === currentPage ? null : (
           <StyledButton
@@ -89,16 +78,29 @@ export const MovieExplorerPagination = memo<MovieExplorerPaginationProps>(
             {prevPage}
           </StyledButton>
         )}
-        <CurrentButton
-          value={currentPage}
-          onClick={(e) => {
-            setCurrentPage(Number(e.currentTarget.value));
-            paginate(e);
-            toggle();
-          }}
-        >
-          {currentPage}
-        </CurrentButton>
+        {firstPage === currentPage || lastPage === currentPage ? (
+          <CurrentButton
+            value={currentPage}
+            onClick={(e) => {
+              setCurrentPage(Number(e.currentTarget.value));
+              paginate(e);
+              toggle();
+            }}
+          >
+            {currentPage}
+          </CurrentButton>
+        ) : (
+          <CurrentButton
+            value={currentPage}
+            onClick={(e) => {
+              setCurrentPage(Number(e.currentTarget.value));
+              paginate(e);
+              toggle();
+            }}
+          >
+            {currentPage}
+          </CurrentButton>
+        )}
         {nextPage === lastPage ? null : (
           <StyledButton
             value={nextPage}
@@ -112,7 +114,7 @@ export const MovieExplorerPagination = memo<MovieExplorerPaginationProps>(
           </StyledButton>
         )}
         {currentPage === lastPage ? null : (
-          <ButtonBorderValue
+          <StyledButton
             value={lastPage}
             onClick={(e) => {
               setCurrentPage(Number(e.currentTarget.value));
@@ -121,7 +123,7 @@ export const MovieExplorerPagination = memo<MovieExplorerPaginationProps>(
             }}
           >
             {lastPage}
-          </ButtonBorderValue>
+          </StyledButton>
         )}
       </StyledPagination>
     );

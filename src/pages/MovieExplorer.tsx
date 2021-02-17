@@ -30,7 +30,7 @@ const StyledSection = styled.section`
 `;
 
 export const MovieExplorer = () => {
-  const { isLoading, toggle } = useToggle(false);
+  const { isLoading, toggle } = useToggle(true);
   const [currentTitle, setCurrentTitle] = useState<string>("");
   const [paginationTitle, setPaginationTitle] = useState("");
   const [Movies, setCollectionMovies] = useState<Movie[]>(() => [
@@ -47,6 +47,7 @@ export const MovieExplorer = () => {
     async (title, page) => {
       return await fetchMovies(title, page).then((Movies: Movie[]) => {
         if (Movies === undefined) return;
+        if (!isLoading) toggle();
         setCollectionMovies(Movies);
       });
     },
