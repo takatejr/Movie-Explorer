@@ -12,7 +12,7 @@ export const StyledPagination = styled.div`
 export const StyledButton = styled.button`
   width: 15%;
   color: rgba(40, 40, 40, 0.7);
-  margin: 0.1%;
+  margin: 2%;
   border: 2px solid rgba(100, 200, 50, 0.7);
   border-radius: 3px;
 
